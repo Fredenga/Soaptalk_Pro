@@ -80,10 +80,11 @@ const Login = () => {
   const classes = useStyles();
   const handleLogin = async (e) => {
     e.preventDefault();
+
     login({ email, password }, dispatch);
-    history.push("/");
-    console.log(user);
+    user && history.push("/");
   };
+
   return (
     <div className={classes.root}>
       <Typography gutterBottom variant="h4">
