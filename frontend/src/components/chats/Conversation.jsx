@@ -15,10 +15,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Conversation = ({ chat }) => {
+const Conversation = ({ chat, setMessages }) => {
   const classes = useStyles();
   const [friend, setFriend] = useState(null);
   const { user } = useAuth();
+
   useEffect(() => {
     const getFriend = async () => {
       try {
@@ -34,14 +35,28 @@ const Conversation = ({ chat }) => {
     };
     getFriend();
   }, [user.accessToken, chat.receiverId]);
-  console.log(friend);
+
   return (
     <div className={classes.conversation}>
       <Avatar
-        src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fHBlcnNvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60"
+        src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fHBlcnNvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
         alt="avatar"
       />
-      <Typography className={classes.name}>Black Valley</Typography>
+      <Typography
+        onClick={async () => {
+          try {
+            const response = await axios.get(`/messages/${chat._id}`, {
+              headers: { token: `Bearer ${user.accessToken}` },
+            });
+            setMessages(response.data);
+          } catch (err) {
+            console.log(err);
+          }
+        }}
+        className={classes.name}
+      >
+        {friend?.username}
+      </Typography>
     </div>
   );
 };

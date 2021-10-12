@@ -14,9 +14,12 @@ router.post("/", verify, async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.get("/:id", async (req, res) => {
+router.get("/:id", verify, async (req, res) => {
   try {
-    const allMessages = await Message.find({ chatId: req.params.id });
+    const allMessages = await Message.find({
+      chatId: req.params.id,
+      sender: req.user.id,
+    });
     res.status(200).json(allMessages);
   } catch (err) {
     res.status(500).json(err);

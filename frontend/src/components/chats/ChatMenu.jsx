@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChatMenu = ({ chats }) => {
+const ChatMenu = ({ chats, setMessages }) => {
   const classes = useStyles();
   return (
     <div className={classes.menu}>
@@ -40,7 +40,7 @@ const ChatMenu = ({ chats }) => {
         <InputBase placeholder="Friends" className={classes.input} />
         <Typography className={classes.contacts}>Contacts</Typography>
         {chats.map((chat) => (
-          <Conversation key={chat._id} chat={chat} />
+          <Conversation key={chat._id} chat={chat} setMessages={setMessages} />
         ))}
       </Container>
     </div>

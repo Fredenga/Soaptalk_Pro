@@ -1,4 +1,4 @@
-import { Container } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Message from "./Message";
 import Sender from "./Sender";
@@ -22,23 +22,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChatBox = () => {
+const ChatBox = ({ messages }) => {
   const classes = useStyles();
-  let own = false;
+
   return (
     <Container className={classes.container}>
       <div className={classes.top}>
-        <Message own={own} />
-        <Message own={true} />
-        <Message own={own} />
-        <Message own={true} />
-        <Message own={own} />
-        <Message own={true} />
-        <Message own={own} />
-        <Message own={true} />
-        <Message own={own} />
-        <Message own={true} />
-        <Message own={own} />
+        {messages.map((message) => (
+          <Message key={message._id} message={message} />
+        ))}
+        {!messages && (
+          <Typography>Click contact to open conversation</Typography>
+        )}
       </div>
       <div className={classes.bottom}>
         <Sender />

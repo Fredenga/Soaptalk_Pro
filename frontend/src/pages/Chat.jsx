@@ -10,6 +10,8 @@ import axios from "axios";
 const Chat = () => {
   const { user } = useAuth();
   const [chats, setChats] = useState([]);
+  const [unique, setUnique] = useState("string");
+  const [messages, setMessages] = useState([]);
   useEffect(() => {
     const getChats = async () => {
       try {
@@ -31,10 +33,14 @@ const Chat = () => {
       <Navbar />
       <Grid container>
         <Grid item md={2} xs={3}>
-          <ChatMenu chats={chats} />
+          <ChatMenu
+            setUnique={setUnique}
+            setMessages={setMessages}
+            chats={chats}
+          />
         </Grid>
         <Grid item md={8} xs={9}>
-          <ChatBox />
+          <ChatBox unique={unique} messages={messages} />
         </Grid>
         <Grid item md={2} xs={false}>
           <ChatOnline />
